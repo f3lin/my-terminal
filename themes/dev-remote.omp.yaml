@@ -6,10 +6,11 @@ blocks:
     segments:
       - foreground: '#E36464'
         foreground_templates: [
-          "{{if eq .Shell \"bash\" }}#FFFFFF{{end}}"
+          "{{if eq .Shell \"bash\" }}#FFFFFF{{end}}",
+          "{{if eq .Shell \"pwsh\" }}#08a1f7{{end}}"
         ]
         style: plain
-        template:  "[{{ if eq .Shell \"bash\" }} {{ end }}{{ if .WSL }}WSL  at {{.Icon}}{{ else if eq .Shell \"pwsh\" }}{{.Icon}}{{ end }}@{{ .UserName}}]"
+        template:  "╭─[{{ if eq .Shell \"bash\" }} {{ end }}{{ if .WSL }}WSL  at {{.Icon}}{{ else if eq .Shell \"pwsh\" }}{{.Icon}}{{ end }}@{{ .UserName}}]"
         properties:
           windows: ' '
         type: os
@@ -113,6 +114,26 @@ blocks:
         foreground: "#000000"
         background: "#ebcc34"
         template: " {{ .WorkspaceName }}{{ if .Version }} {{ .Version }}{{ end }}"
+  - alignment: left
+    newline: true
+    segments:
+      - foreground: '#E36464'
+        foreground_templates: [
+          "{{if eq .Shell \"bash\" }}#FFFFFF{{end}}",
+          "{{if eq .Shell \"pwsh\" }}#08a1f7{{end}}"
+        ]
+        style: plain
+        template: ╰─
+        type: text
+      - foreground: '#e0f8ff'
+        foreground_templates:
+          - '{{ if gt .Code 0 }}#ef5350{{ end }}'
+        properties:
+          always_enabled: true
+        style: plain
+        template: ' '
+        type: status
+    type: prompt
 
 final_space: true
 version: 2
