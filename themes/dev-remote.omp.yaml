@@ -18,7 +18,7 @@ blocks:
         properties:
           style: folder
         style: plain
-        template: '[<f><u> {{ .Path }}</u></f>] '
+        template: '[<f><u> {{ .Path }}</u></f>]'
         type: path
       - background: '#19358a'
         background_templates:
