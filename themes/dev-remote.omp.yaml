@@ -78,10 +78,10 @@ blocks:
         template: '{{ if .Error }}{{ .Error }}{{ else }} {{ .Full }} {{ end }}'
       - type: kubectl
         style: powerline
-        powerline_symbol: 
+        # powerline_symbol: 
         foreground: "#000000"
-        background: "#ebcc34"
-        template: " ﴱ  {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} "
+        background: "#0000FF"
+        template: " \u2638 {{if eq .Context \"default\"}}k8s{{else}}{{.Context}}{{end}}{{if eq .Namespace \"default\"}}kubectl{{else}}{{.Namespace}}{{end}} : \u2388 : {{if eq .Cluster \"default\"}}{{else}}{{.Cluster}}{{end}}"
         properties:
           context_aliases:
             arn:aws:eks:eu-west-1:1234567890:cluster/posh: posh
