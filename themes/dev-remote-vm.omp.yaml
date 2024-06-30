@@ -10,7 +10,7 @@ blocks:
           "{{if eq .Shell \"pwsh\" }}#08a1f7{{end}}"
         ]
         style: plain
-        template:  "╭─[{{ if eq .Shell \"bash\" }} {{ end }}{{ if .WSL }}WSL  at {{.Icon}}{{ else if eq .Shell \"pwsh\" }}{{.Icon}}{{ end }}{{ .UserName}}@{{.HostName}}]"
+        template:  "╭─[{{ if eq .Shell \"bash\" }} {{ end }}{{ if .WSL }}WSL  at {{.Icon}}{{ else if eq .Shell \"pwsh\" }}{{.Icon}}{{ end }}@{{ .UserName}}]"
         properties:
           windows: ' '
         type: os
@@ -18,7 +18,13 @@ blocks:
         properties:
           style: folder
         style: plain
-        template: '[<f><u> {{ .Path }}</u></f>]'
+        template: '[<#e91e63><f> </f>'
+        type: path
+      - foreground: '#ffffff'
+        properties:
+          style: folder
+        style: plain
+        template: '{{ .Path }}]'
         type: path
       - background: '#19358a'
         background_templates:
@@ -50,25 +56,25 @@ blocks:
         style: diamond
         template: '{{ if( .UpstreamIcon ) }}{{ url .UpstreamIcon .UpstreamURL }}{{ end }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} <#ed1941> {{.Working.String}}</>{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} <#225a1f> {{.Staging.String}}</>{{ end }}{{ if gt .StashCount 0 }}   {{.StashCount}}{{ end }}{{ if gt .WorktreeCount 0 }}{{if .IsWorkTree}}<#1d953f>{{ end }}   {{if .IsWorkTree}}</>{{ end }}{{.WorktreeCount}}{{ end }}'
         type: git
-      - type: status
-        style: plain
-        foreground: '#FFFFFF'
-        foreground_templates:
-          - '{{ if gt .Code 0 }}#e91e63{{ end }}'
-        template: '  {{ if gt .Code 0 }}{{ .Code }}{{ end }}'
-        properties:
-          always_enabled: true
       - foreground: '#DCB977'
         style: plain
-        template: ' '
+        template: '  '
         type: status
+      - type: status
+        style: plain
+        foreground: '#ccffcc'
+        foreground_templates:
+          - '{{ if gt .Code 0 }}#e91e63{{ end }}'
+        template: '{{ if gt .Code 0 }}{{ .Code }}{{ else }} ✓ {{ end }}'
+        properties:
+          always_enabled: true
   - type: prompt
     alignment: right
     segments:
       - type: text
-        foreground: '#906cff'
+        foreground: '#e25822'
         style: plain
-        template: ''
+        template: ' '
       - type: python
         style: powerline
         foreground: "#ffffff"
@@ -78,10 +84,9 @@ blocks:
         template: '{{ if .Error }}{{ .Error }}{{ else }} {{ .Full }} {{ end }}'
       - type: kubectl
         style: powerline
-        powerline_symbol: 
         foreground: "#000000"
-        background: "#ebcc34"
-        template: " ﴱ  {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} "
+        background: "#906cff"
+        template: "\u2388 {{if eq .Context \"default\"}}{{else}}CTX:{{.Context}}{{end}}::{{if .Namespace }}N:{{.Namespace}}{{else}}{{end}}::{{if eq .Cluster \"default\"}}{{else}}C:{{.Cluster}}{{end}} "
         properties:
           context_aliases:
             arn:aws:eks:eu-west-1:1234567890:cluster/posh: posh
@@ -104,7 +109,6 @@ blocks:
         style: diamond
         foreground: "#ffffff"
         background: "#c386f1"
-        trailing_diamond: 
         template: "{{ .IP }}"
         properties:
           cache_timeout: 5
@@ -113,7 +117,15 @@ blocks:
         style: powerline
         foreground: "#000000"
         background: "#ebcc34"
-        template: " {{ .WorkspaceName }}{{ if .Version }} {{ .Version }}{{ end }}"
+        template: " {{ if .Version }} {{ .Version }}{{ end }}"
+      - foreground: '#906cff'
+        foreground_templates: [
+          "{{if eq .Shell \"bash\" }}#e25822{{end}}",
+          "{{if eq .Shell \"pwsh\" }}#e25822{{end}}"
+        ]
+        style: plain
+        template: '
+        type: text
   - alignment: left
     newline: true
     segments:
